@@ -21,7 +21,7 @@ module.exports = {
         "card-active-hover": "#6a7a8e",
         "default-text": "#f1f3f5",
         "blue-accent": "#1da1f2",
-        "blue-accent-hover": "#1a91e2",
+        "blue-accent-hover": "#1a95e2",
       },
     },
   },

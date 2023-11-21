@@ -5,19 +5,19 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <Nav>
-      <div>
+    <nav className="flex justify-between bg-nav p-4">
+      <div className="flex items-center space-x-4">
         <Link href="/">
           <FontAwesomeIcon icon={faHome} className="icon" />
         </Link>
         <Link href="/TicketPage/new">
-          <FontAwesomeIcon icon={faTicket} calcMode="icon" />
+          <FontAwesomeIcon icon={faTicket} className="icon" />
         </Link>
       </div>
       <div>
         <p className="text-default-text">advaitdhakad@gmail.com</p>
       </div>
-    </Nav>
+    </nav>
   );
 };
 export default Nav;
