@@ -5,7 +5,7 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <Nav>
+    <nav>
       <div>
         <Link href="/">
           <FontAwesomeIcon icon={faHome} className="icon" />
@@ -17,7 +17,7 @@ const Nav = () => {
       <div>
         <p className="text-default-text">advaitdhakad@gmail.com</p>
       </div>
-    </Nav>
+    </nav>
   );
 };
 export default Nav;
