@@ -1,30 +1,30 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export const TicktForm = () => {
-  const HandleSubmit = (e) => {
+  const router = useRouter();
+  const HandleSubmit = async (e) => {
     e.preventDefault();
-    fetch("/api/tickets", {
+    const res = await fetch("/api/Tickets", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(data),
-    }).then(async (res) => {
-      if (res.ok) {
-        const ticket = await res.json();
-        router.push(`/tickets/${ticket.id}`);
-      }
+      "Content-Type": "application/json",
     });
+    if (!res.ok) {
+      throw new Error("Falied to create ticket");
+    }
+    router.refresh();
+    router.push("/");
   };
+
   const handlechange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
 
-    setData((prevstate) => ({
-      ...prevstate,
+    setData((prevState) => ({
+      ...prevState,
       [name]: value,
     }));
   };
@@ -38,6 +38,7 @@ export const TicktForm = () => {
     category: "Hardware Issue",
   };
   const [data, setData] = useState(startingdata);
+
   return (
     <div className="flex justify-center">
       <form
@@ -53,33 +54,24 @@ export const TicktForm = () => {
           type="text"
           required={true}
           value={data.title}
-          onChange={(e) => handlechange({ ...data, title: e.target.value })}
+          onChange={handlechange}
         />
         <label>Description</label>
-        <input
+        <textarea
           id="description"
           name="description"
           type="text"
           required={true}
           value={data.description}
-          onChange={(e) => handlechange({ ...data, title: e.target.value })}
-        />
-        <label>Title</label>
-        <textarea
-          id="title"
-          name="title"
-          type="text"
-          required={true}
-          value={data.title}
           rows={5}
-          onChange={(e) => handlechange({ ...data, title: e.target.value })}
+          onChange={handlechange}
         />
         <label>Category</label>
         <select
           id="category"
           name="category"
           value={data.category}
-          onChange={(e) => handlechange({ ...data, category: e.target.value })}
+          onChange={handlechange}
         >
           <option value="Hardware Issue">Hardware Issue</option>
           <option value="Software Issue">Software Issue</option>
@@ -96,9 +88,7 @@ export const TicktForm = () => {
               required={true}
               value={1}
               checked={data.priority == 1}
-              onChange={(e) =>
-                handlechange({ ...data, priority: e.target.value })
-              }
+              onChange={handlechange}
             />
             <label>1</label>
           </div>
@@ -110,9 +100,7 @@ export const TicktForm = () => {
               required={true}
               value={2}
               checked={data.priority == 2}
-              onChange={(e) =>
-                handlechange({ ...data, priority: e.target.value })
-              }
+              onChange={handlechange}
             />
             <label>2</label>
           </div>
@@ -124,9 +112,7 @@ export const TicktForm = () => {
               required={true}
               value={3}
               checked={data.priority == 3}
-              onChange={(e) =>
-                handlechange({ ...data, priority: e.target.value })
-              }
+              onChange={handlechange}
             />
             <label>3</label>
           </div>
@@ -140,14 +126,14 @@ export const TicktForm = () => {
           min={0}
           max={100}
           step={1}
-          onChange={(e) => handlechange({ ...data, progress: e.target.value })}
+          onChange={handlechange}
         />
         <label>Status</label>
         <select
           id="status"
           name="status"
           value={data.status}
-          onChange={(e) => handlechange({ ...data, status: e.target.value })}
+          onChange={handlechange}
         >
           <option value="not started">Not Started</option>
           <option value="in progress">In Progress</option>
